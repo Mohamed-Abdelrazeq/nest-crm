@@ -19,19 +19,19 @@ export class TasksController {
     }
 
     @Post()
-    async create(@Body() createTaskDTO: CreateTaskDto): Promise<Task> {
-        return this.tasksService.create(createTaskDTO);
+    async create(@Body() createTaskDTO: CreateTaskDto): Promise<Task | { error: string}> {
+        return  await this.tasksService.create(createTaskDTO);
     }
 
-    // @Delete(':id')
-    // delete(@Param('id') id: string): string{
-    //     return `Delete Task with id: ${id}`
-    // }
+    @Delete(':id')
+    async delete(@Param('id') id: string): Promise<string>{
+        return await this.tasksService.delete(id);
+    }
 
-    // @Put(':id')
-    // update(@Param('id') id: string, @Body() updateTaskDTO: UpdateTaskDto): string{
-    //     return `Title: ${updateTaskDTO.title} Description: ${updateTaskDTO.description} Assigned to: ${updateTaskDTO.assignedTo}`;
-    // }
+    @Put(':id')
+    async update(@Param('id') id: string, @Body() updateTaskDTO: UpdateTaskDto): Promise<Task | { error: string }>{
+       return await this.tasksService.update(id, updateTaskDTO);
+    }
 }
 
 
