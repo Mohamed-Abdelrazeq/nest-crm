@@ -9,12 +9,12 @@ export class TasksController {
     constructor(private readonly tasksService: TasksService){}
 
     @Get()
-    async findAll(): Promise<Task[]> {
+    async findAll(): Promise<Task[] | {error: string}> {
         return await this.tasksService.findAll();
     }
 
     @Get(':id')
-    async findById(@Param('id') id: string) : Promise<Task>{
+    async findById(@Param('id') id: string) : Promise<Task | {error: string}>{
         return this.tasksService.findById(id);
     }
 
@@ -24,7 +24,7 @@ export class TasksController {
     }
 
     @Delete(':id')
-    async delete(@Param('id') id: string): Promise<string>{
+    async delete(@Param('id') id: string): Promise<{ message: string } | { error: string }>{
         return await this.tasksService.delete(id);
     }
 

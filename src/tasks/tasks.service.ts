@@ -10,23 +10,21 @@ export class TasksService {
  
     constructor(@InjectModel('Task') private readonly taskModel: Model<Task>) {}
 
-    async findAll(): Promise<Task[]> {
+    async findAll(): Promise<Task[] | {error: string}> {
         try {
             return await this.taskModel.find();
         } catch (error) {
-            // Handle the error here
             console.error(error);
-            throw new Error('Failed to fetch tasks');
+            return { error: error.message };
         }
     }
 
-    async findById(id: string): Promise<Task> {
+    async findById(id: string): Promise<Task | { error: string }> {
         try {
             return await this.taskModel.findById(id);
         } catch (error) {
-            // Handle the error here
             console.error(error);
-            throw new Error('Failed to find task');
+            return { error: error.message };
         }
     }
 
@@ -35,20 +33,18 @@ export class TasksService {
             const newTask =  new this.taskModel(createTaskDTO);
             return await newTask.save();
         } catch (error) {
-            // Handle the error here
             console.error(error);
-            return { error: 'Failed to create task' };
+            return { error: error.message };
         }
     }
 
-    async delete(id: string): Promise<string> {
+    async delete(id: string): Promise<{ message: string } | { error: string }> {
         try {
             await this.taskModel.findByIdAndDelete(id);
-            return "Task deleted successfully";
+            return { message: "Task deleted successfully" };
         } catch (error) {
-            // Handle the error here
             console.error(error);
-            throw new Error('Failed to delete task');
+            return { error: error.message };
         }
     }
 
@@ -57,9 +53,8 @@ export class TasksService {
             const updatedTask = await this.taskModel.findByIdAndUpdate(id, updateTaskDTO, { new: true });
             return updatedTask;
         } catch (error) {
-            // Handle the error here
             console.error(error);
-            return { error: 'Failed to update task' };
+            return { error: error.message };
         }
     }
 }
