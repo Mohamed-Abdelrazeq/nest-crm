@@ -9,29 +9,29 @@ export class TasksController {
     constructor(private readonly tasksService: TasksService){}
 
     @Get()
-    findAll(): Task[] {
-        return this.tasksService.findAll();
+    async findAll(): Promise<Task[]> {
+        return await this.tasksService.findAll();
     }
 
     @Get(':id')
-    findById(@Param('id') id: string) : Task{
+    async findById(@Param('id') id: string) : Promise<Task>{
         return this.tasksService.findById(id);
     }
 
     @Post()
-    create(@Body() createTaskDTO: CreateTaskDto): string {
-        return `Title: ${createTaskDTO.title} Description: ${createTaskDTO.description} Assigned to: ${createTaskDTO.assignedTo}`;
+    async create(@Body() createTaskDTO: CreateTaskDto): Promise<Task> {
+        return this.tasksService.create(createTaskDTO);
     }
 
-    @Delete(':id')
-    delete(@Param('id') id: string): string{
-        return `Delete Task with id: ${id}`
-    }
+    // @Delete(':id')
+    // delete(@Param('id') id: string): string{
+    //     return `Delete Task with id: ${id}`
+    // }
 
-    @Put(':id')
-    update(@Param('id') id: string, @Body() updateTaskDTO: UpdateTaskDto): string{
-        return `Title: ${updateTaskDTO.title} Description: ${updateTaskDTO.description} Assigned to: ${updateTaskDTO.assignedTo}`;
-    }
+    // @Put(':id')
+    // update(@Param('id') id: string, @Body() updateTaskDTO: UpdateTaskDto): string{
+    //     return `Title: ${updateTaskDTO.title} Description: ${updateTaskDTO.description} Assigned to: ${updateTaskDTO.assignedTo}`;
+    // }
 }
 
 
