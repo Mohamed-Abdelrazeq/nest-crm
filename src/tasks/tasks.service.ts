@@ -14,7 +14,6 @@ export class TasksService {
         try {
             return await this.taskModel.find();
         } catch (error) {
-            console.error(error);
             return { error: error.message };
         }
     }
@@ -23,7 +22,6 @@ export class TasksService {
         try {
             return await this.taskModel.findById(id);
         } catch (error) {
-            console.error(error);
             return { error: error.message };
         }
     }
@@ -33,7 +31,6 @@ export class TasksService {
             const newTask =  new this.taskModel(createTaskDTO);
             return await newTask.save();
         } catch (error) {
-            console.error(error);
             return { error: error.message };
         }
     }
@@ -43,7 +40,6 @@ export class TasksService {
             await this.taskModel.findByIdAndDelete(id);
             return { message: "Task deleted successfully" };
         } catch (error) {
-            console.error(error);
             return { error: error.message };
         }
     }
@@ -53,7 +49,6 @@ export class TasksService {
             const updatedTask = await this.taskModel.findByIdAndUpdate(id, updateTaskDTO, { new: true });
             return updatedTask;
         } catch (error) {
-            console.error(error);
             return { error: error.message };
         }
     }
