@@ -9,14 +9,14 @@ export class UsersService {
       username: 'John Doe',
       email: 'John@gmail.com',
       password: 'password123',
-      rules: ['admin'],
+      roles: ['admin', 'user'],
     },
     {
       id: 2,
       username: 'Jane Doe',
       email: 'Jane@gmail.com',
       password: 'password123',
-      rules: ['user'],
+      roles: ['user'],
     },
   ];
 

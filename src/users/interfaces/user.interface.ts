@@ -3,7 +3,9 @@ interface User {
   username: string;
   email: string;
   password: string;
-  rules: string[];
+  roles: string[];
 }
+
+// roles: ['admin', 'user'] or ['user']
 
 export default User;
