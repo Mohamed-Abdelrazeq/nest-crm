@@ -1,38 +1,53 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Body,
+  Param,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { TasksService } from './tasks.service';
 import { Task } from './interfaces/task.interface';
+import { AuthGuard } from 'src/auth/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('tasks')
 export class TasksController {
-    constructor(private readonly tasksService: TasksService){}
+  constructor(private readonly tasksService: TasksService) {}
 
-    @Get()
-    async findAll(): Promise<Task[] | {error: string}> {
-        return await this.tasksService.findAll();
-    }
+  @Get()
+  async findAll(): Promise<Task[] | { error: string }> {
+    return await this.tasksService.findAll();
+  }
 
-    @Get(':id')
-    async findById(@Param('id') id: string) : Promise<Task | {error: string}>{
-        return this.tasksService.findById(id);
-    }
+  @Get(':id')
+  async findById(@Param('id') id: string): Promise<Task | { error: string }> {
+    return this.tasksService.findById(id);
+  }
 
-    @Post()
-    async create(@Body() createTaskDTO: CreateTaskDto): Promise<Task | { error: string}> {
-        return  await this.tasksService.create(createTaskDTO);
-    }
+  @Post()
+  async create(
+    @Body() createTaskDTO: CreateTaskDto,
+  ): Promise<Task | { error: string }> {
+    return await this.tasksService.create(createTaskDTO);
+  }
 
-    @Delete(':id')
-    async delete(@Param('id') id: string): Promise<{ message: string } | { error: string }>{
-        return await this.tasksService.delete(id);
-    }
+  @Delete(':id')
+  async delete(
+    @Param('id') id: string,
+  ): Promise<{ message: string } | { error: string }> {
+    return await this.tasksService.delete(id);
+  }
 
-    @Put(':id')
-    async update(@Param('id') id: string, @Body() updateTaskDTO: UpdateTaskDto): Promise<Task | { error: string }>{
-       return await this.tasksService.update(id, updateTaskDTO);
-    }
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateTaskDTO: UpdateTaskDto,
+  ): Promise<Task | { error: string }> {
+    return await this.tasksService.update(id, updateTaskDTO);
+  }
 }
-
-
-
